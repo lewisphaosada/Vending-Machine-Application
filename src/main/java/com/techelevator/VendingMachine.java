@@ -51,5 +51,10 @@ public class VendingMachine {
             }
         }
     }
+
+    public String getQuantityRemaining() {
+        //Just a placeholder, needs to implemented.
+        return withoutSplit.get(0);
+    }
 }
 

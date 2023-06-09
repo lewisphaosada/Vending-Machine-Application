@@ -38,7 +38,7 @@ public class VendingMachineCLI {
                     vendingMachine.displayContents();
                     break;
                 case MAIN_MENU_OPTION_PURCHASE:
-                    System.out.println("\nCurrent Money Provided: " + transaction.getCurrentDollarAmount());
+                    System.out.println("\nCurrent Money Deposited: " + transaction.getCurrentDollarAmount());
                     stayInPurchaseMenu = true;
                     while (stayInPurchaseMenu) {
                         String purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
@@ -51,22 +51,24 @@ public class VendingMachineCLI {
                                 break;
                             case PURCHASE_MENU_OPTION_SELECT_PRODUCT:
                                 vendingMachine.displayContents();
-                                System.out.println("\nPlease enter the Slot ID");
-                                System.out.print("Purchase --> ");
+                                transaction.dispenseProduct(menu.errorCheckString("Please enter the Slot ID", "Purchase --> ", 2));
+                                //TODO finish, longest challenge
                                 break;
                             case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
                                 System.out.println("You chose to Finish Transaction");
                                 transaction.setCurrentDollarAmount(0);
                                 stayInPurchaseMenu = false;
+                                //TODO finish
                                 break;
                             default:
                                 System.out.println("Not an Option");
                         }
-                        System.out.println("\nCurrent Money Provided: " + transaction.getCurrentDollarAmount());
+                        System.out.println("\nCurrent Money Deposited: " + transaction.getCurrentDollarAmount());
                     }
                     break;
                 case MAIN_MENU_OPTION_EXIT:
                     System.out.println("You chose to Exit");
+                    //TODO finish
                     break;
                 default:
                     System.out.println("Not an Option");

@@ -13,6 +13,10 @@ public class Transaction {
         this.vendingMachine = vendingMachine;
     }
 
+    public void dispenseProduct(String slotID){
+        System.out.println(slotID + " is being passed to this function to use for search.");
+    }
+
     public void depositDollarAmount(int addDollarAmount) {
         this.currentDollarAmount += addDollarAmount;
     }

@@ -76,4 +76,17 @@ public class Menu {
         } while (String.valueOf(userIntegerInput).length() > lengthRestriction || tryCatchFlag);
         return value;
     }
+
+    //Checks the Users Input on String types and restricts the length.
+    public String errorCheckString(String prompt, String prompt2, int lengthRestriction) {
+        String userStringInput = "";
+        do {
+            if (userStringInput.length() > lengthRestriction)
+                System.out.println("Input length is greater than " + lengthRestriction + ". Please try again.");
+            System.out.println("\n" + prompt);
+            System.out.print(prompt2);
+            userStringInput = in.nextLine();
+        } while (userStringInput.length() > lengthRestriction);
+        return userStringInput;
+    }
 }
