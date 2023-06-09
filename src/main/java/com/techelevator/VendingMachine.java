@@ -15,7 +15,7 @@ public class VendingMachine {
         if (firstRun)
             loadFromFile();
 
-        System.out.printf("%4s %-20s %-10s %-20s", "Slot", "Item", "Price", "Quantity");
+        System.out.printf("%-6s %-20s %-10s %-20s", "Slot", "Item", "Price", "Quantity");
         System.out.println();
         for (String entry : withoutSplit) {
             List<String> newList = new ArrayList<>(List.of(entry.split("\\|")));
@@ -23,7 +23,7 @@ public class VendingMachine {
                 newList.set(4, "Sold Out");
             }
             double price = Double.parseDouble(newList.get(2));
-            System.out.printf("%-4s %-20s %-10.2f %-1s", newList.get(0), newList.get(1), price, newList.get(4));
+            System.out.printf("%-6s %-20s %-10.2f %-1s", newList.get(0), newList.get(1), price, newList.get(4));
             System.out.println();
         }
     }
@@ -52,7 +52,7 @@ public class VendingMachine {
         }
     }
 
-    //Checks to see if the ID exist and if so it will return the quantity that remains
+    //Checks to see if the ID exist, if so, it will return the quantity that remains.
     public String getQuantityRemainingIfValidID(String identifier) {
         for (String s : withoutSplit) {
             List<String> newList = new ArrayList<>(List.of(s.split("\\|")));
