@@ -46,11 +46,13 @@ public class VendingMachineCLI {
                             case PURCHASE_MENU_OPTION_FEED_MONEY:
                                 transaction.depositDollarAmount(
                                         menu.depositErrorCheck("How much would you like to Deposit?",
-                                                "Only Accept (1, 5, 10, 20) Whole Dollar Amounts: ",
+                                                "Only Accept (1, 5, 10, 20) Whole Dollar Amounts >>> ",
                                                 2, new ArrayList<>(List.of(1, 5, 10, 20))));
                                 break;
                             case PURCHASE_MENU_OPTION_SELECT_PRODUCT:
-                                System.out.println("You chose to Select Product");
+                                vendingMachine.displayContents();
+                                System.out.println("\nPlease enter the Slot ID");
+                                System.out.print("Purchase --> ");
                                 break;
                             case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
                                 System.out.println("You chose to Finish Transaction");
