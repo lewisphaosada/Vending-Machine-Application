@@ -15,7 +15,6 @@ public class VendingMachine {
         if (firstRun)
             loadFromFile();
 
-        //Outputs the change/changes that occur to vending machine.
         System.out.printf("%4s %-20s %-10s %-20s", "Slot", "Item", "Price", "Quantity");
         System.out.println();
         for (String entry : withoutSplit) {
