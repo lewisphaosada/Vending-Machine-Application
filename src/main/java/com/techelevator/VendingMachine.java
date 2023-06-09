@@ -11,12 +11,13 @@ public class VendingMachine {
     private List<String> withoutSplit = new ArrayList<>();
 
     public void displayContents() {
+        //If initial run, populate with starting values.
         if (firstRun)
             loadFromFile();
 
+        //Outputs the change/changes that occur to vending machine.
         System.out.printf("%4s %-20s %-10s %-20s", "Slot", "Item", "Price", "Quantity");
         System.out.println();
-
         for (String entry : withoutSplit) {
             List<String> newList = new ArrayList<>(List.of(entry.split("\\|")));
             if (Integer.parseInt(newList.get(4)) < 1) {
