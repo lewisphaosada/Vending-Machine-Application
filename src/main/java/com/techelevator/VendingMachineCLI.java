@@ -54,6 +54,7 @@ public class VendingMachineCLI {
                                 vendingMachine.setQuantityRemaining("A1", 0);
                                 transaction.dispenseProduct(menu.errorCheckString("Please enter the Slot ID", "Purchase --> ", 2));
                                 //TODO Finish
+                                //Dispensing an item prints the item name, cost, and the money remaining
                                 break;
                             case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
                                 System.out.println("You chose to Finish Transaction");
@@ -73,8 +74,8 @@ public class VendingMachineCLI {
                     }
                     break;
                 case MAIN_MENU_OPTION_EXIT:
-                    System.out.println("You chose to Exit");
-                    //TODO finish
+                    System.out.println("Thank you, come again!");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Not an Option");
