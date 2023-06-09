@@ -53,13 +53,18 @@ public class VendingMachineCLI {
                                 vendingMachine.displayContents();
                                 vendingMachine.setQuantityRemaining("A1", 0);
                                 transaction.dispenseProduct(menu.errorCheckString("Please enter the Slot ID", "Purchase --> ", 2));
-                                //TODO finish, longest challenge
+                                //TODO Finish
                                 break;
                             case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
                                 System.out.println("You chose to Finish Transaction");
                                 transaction.setCurrentDollarAmount(0);
                                 stayInPurchaseMenu = false;
-                                //TODO finish
+                                //TODO
+                                //Selecting "(3) Finish Transaction" allows the customer to complete the
+                                //    transaction and receive any remaining change.
+                                //        - The machine returns the customer's money using nickels, dimes, and quarters
+                                //        (using the smallest amount of coins possible).
+                                //        - The machine's current balance updates to $0 remaining.
                                 break;
                             default:
                                 System.out.println("Not an Option");

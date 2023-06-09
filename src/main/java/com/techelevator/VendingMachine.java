@@ -60,7 +60,11 @@ public class VendingMachine {
                 return newList.get(4);
             }
         }
-        return "Slot ID does not exist";
+        return "Not Found";
+    }
+
+    public List<String> getWithoutSplit() {
+        return withoutSplit;
     }
 }
 
