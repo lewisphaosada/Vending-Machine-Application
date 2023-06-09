@@ -30,7 +30,7 @@ public class VendingMachineCLI {
     }
 
     public void run() {
-        boolean stayInPurchaseMenu = false;
+        boolean stayInPurchaseMenu;
         while (true) {
             String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
             switch (choice) {
@@ -44,7 +44,7 @@ public class VendingMachineCLI {
                         String purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
                         switch (purchaseChoice) {
                             case PURCHASE_MENU_OPTION_FEED_MONEY:
-                                transaction.addDollarAmount(
+                                transaction.depositDollarAmount(
                                         menu.depositErrorCheck("How much would you like to Deposit?",
                                                 "Only Accept (1, 5, 10, 20) Whole Dollar Amounts: ",
                                                 2, new ArrayList<>(List.of(1, 5, 10, 20))));

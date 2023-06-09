@@ -8,7 +8,7 @@ public class Transaction {
         this.vendingMachine = vendingMachine;
     }
 
-    public void addDollarAmount(int addDollarAmount) {
+    public void depositDollarAmount(int addDollarAmount) {
         this.currentDollarAmount += addDollarAmount;
     }
 
