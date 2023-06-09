@@ -2,6 +2,9 @@ package com.techelevator;
 
 import com.techelevator.view.Menu;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class VendingMachineCLI {
     private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
@@ -18,43 +21,46 @@ public class VendingMachineCLI {
 
     private Menu menu;
     private VendingMachine vendingMachine;
+    private Transaction transaction;
 
-    public VendingMachineCLI(Menu menu, VendingMachine vendingMachine) {
+    public VendingMachineCLI(Menu menu, VendingMachine vendingMachine, Transaction transaction) {
         this.menu = menu;
         this.vendingMachine = vendingMachine;
+        this.transaction = transaction;
     }
 
     public void run() {
         boolean stayInPurchaseMenu = false;
         while (true) {
             String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
-
             switch (choice) {
                 case MAIN_MENU_OPTION_DISPLAY_ITEMS:
                     vendingMachine.displayContents();
                     break;
                 case MAIN_MENU_OPTION_PURCHASE:
-                    int currentMoney = 0;
-                    System.out.println("\nCurrent Money Provided: " + currentMoney);
+                    System.out.println("\nCurrent Money Provided: " + transaction.getCurrentDollarAmount());
                     stayInPurchaseMenu = true;
                     while (stayInPurchaseMenu) {
                         String purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
                         switch (purchaseChoice) {
                             case PURCHASE_MENU_OPTION_FEED_MONEY:
-                                System.out.println("You chose to Feed Money");
-                                ++currentMoney;
+                                transaction.addDollarAmount(
+                                        menu.depositErrorCheck("How much would you like to Deposit?",
+                                                "Only Accept (1, 5, 10, 20) Whole Dollar Amounts: ",
+                                                2, new ArrayList<>(List.of(1, 5, 10, 20))));
                                 break;
                             case PURCHASE_MENU_OPTION_SELECT_PRODUCT:
                                 System.out.println("You chose to Select Product");
                                 break;
                             case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
                                 System.out.println("You chose to Finish Transaction");
+                                transaction.setCurrentDollarAmount(0);
                                 stayInPurchaseMenu = false;
                                 break;
                             default:
                                 System.out.println("Not an Option");
                         }
-                        System.out.println("\nCurrent Money Provided: " + currentMoney);
+                        System.out.println("\nCurrent Money Provided: " + transaction.getCurrentDollarAmount());
                     }
                     break;
                 case MAIN_MENU_OPTION_EXIT:
@@ -69,7 +75,8 @@ public class VendingMachineCLI {
     public static void main(String[] args) {
         Menu menu = new Menu(System.in, System.out);
         VendingMachine vendingMachine = new VendingMachine();
-        VendingMachineCLI cli = new VendingMachineCLI(menu, vendingMachine);
+        Transaction transaction = new Transaction(vendingMachine);
+        VendingMachineCLI cli = new VendingMachineCLI(menu, vendingMachine, transaction);
 
         cli.run();
     }

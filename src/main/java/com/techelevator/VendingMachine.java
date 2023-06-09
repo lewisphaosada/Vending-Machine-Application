@@ -29,7 +29,7 @@ public class VendingMachine {
         }
     }
 
-    public void loadFromFile() {
+    private void loadFromFile() {
         File newFile = new File("vendingmachine.csv");
         try (Scanner sc = new Scanner(newFile)) {
             while (sc.hasNextLine()) {
@@ -42,12 +42,13 @@ public class VendingMachine {
         }
     }
 
-    public void setAmountRemaining(String identifier, int newValue) {
+    public void setQuantityRemaining(String identifier, int quantityRemaining) {
         for (int i = 0; i < withoutSplit.size(); i++) {
             List<String> newList = new ArrayList<>(List.of(withoutSplit.get(i).split("\\|")));
             if (newList.get(0).equals(identifier)) {
-                newList.set(4, String.valueOf(newValue));
+                newList.set(4, String.valueOf(quantityRemaining));
                 withoutSplit.set(i, newList.get(0) + "|" + newList.get(1) + "|" + newList.get(2) + "|" + newList.get(3) + "|" + newList.get(4));
+                return;
             }
         }
     }
