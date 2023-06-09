@@ -52,9 +52,15 @@ public class VendingMachine {
         }
     }
 
-    public String getQuantityRemaining() {
-        //Just a placeholder, needs to implemented.
-        return withoutSplit.get(0);
+    //Checks to see if the ID exist and if so it will return the quantity that remains
+    public String getQuantityRemainingIfValidID(String identifier) {
+        for (String s : withoutSplit) {
+            List<String> newList = new ArrayList<>(List.of(s.split("\\|")));
+            if (newList.get(0).equals(identifier)) {
+                return newList.get(4);
+            }
+        }
+        return "Slot ID does not exist";
     }
 }
 

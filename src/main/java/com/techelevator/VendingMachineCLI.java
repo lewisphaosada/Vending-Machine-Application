@@ -51,6 +51,7 @@ public class VendingMachineCLI {
                                 break;
                             case PURCHASE_MENU_OPTION_SELECT_PRODUCT:
                                 vendingMachine.displayContents();
+                                vendingMachine.setQuantityRemaining("A1", 0);
                                 transaction.dispenseProduct(menu.errorCheckString("Please enter the Slot ID", "Purchase --> ", 2));
                                 //TODO finish, longest challenge
                                 break;
