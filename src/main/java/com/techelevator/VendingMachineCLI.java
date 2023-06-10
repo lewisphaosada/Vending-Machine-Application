@@ -2,8 +2,10 @@ package com.techelevator;
 
 import com.techelevator.view.Menu;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class VendingMachineCLI {
@@ -18,6 +20,7 @@ public class VendingMachineCLI {
 
     private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT, MAIN_MENU_SECRET_OPTION};
     private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_MENU_OPTION_FEED_MONEY, PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_FINISH_TRANSACTION};
+    NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
 
     private Menu menu;
     private VendingMachine vendingMachine;
@@ -38,7 +41,7 @@ public class VendingMachineCLI {
                     vendingMachine.displayContents();
                     break;
                 case MAIN_MENU_OPTION_PURCHASE:
-                    System.out.println("\nCurrent Money Deposited: " + transaction.getCurrentDollarAmount());
+                    System.out.println("\nCurrent Money Deposited: " + formatter.format(transaction.getCurrentDollarAmount()));
                     stayInPurchaseMenu = true;
                     while (stayInPurchaseMenu) {
                         String purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
@@ -51,9 +54,10 @@ public class VendingMachineCLI {
                                 break;
                             case PURCHASE_MENU_OPTION_SELECT_PRODUCT:
                                 vendingMachine.displayContents();
-                                transaction.dispenseProduct(
+                                String message = transaction.dispenseProduct(
                                         menu.errorCheckString("Please enter the Slot ID",
                                                 "Purchase --> ", 2));
+                                System.out.println(message);
                                 //TODO Finish
                                 //Dispensing an item prints the item name, cost, and the money remaining
                                 break;
@@ -71,7 +75,7 @@ public class VendingMachineCLI {
                             default:
                                 System.out.println("Not an Option");
                         }
-                        System.out.println("\nCurrent Money Deposited: " + transaction.getCurrentDollarAmount());
+                        System.out.println("\nCurrent Money Deposited: " + formatter.format(transaction.getCurrentDollarAmount()));
                     }
                     break;
                 case MAIN_MENU_OPTION_EXIT:

@@ -67,6 +67,7 @@ public class Menu {
             try {
                 userIntegerInput = in.nextInt();
                 int integerInput = userIntegerInput;
+                //Checks to see if the user input an acceptable amount, if so, set value to the accepted user input value.
                 value = values.stream().filter(amount -> amount == integerInput).findFirst().orElseThrow(() -> new InputMismatchException("Input Invalid"));
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please try again.");

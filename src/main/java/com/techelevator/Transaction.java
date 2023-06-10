@@ -1,49 +1,63 @@
 package com.techelevator;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class Transaction {
     private VendingMachine vendingMachine;
-    private int currentDollarAmount = 0;
+    private double currentDollarAmount = 0;
+    NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
     LocalDate myDate = LocalDate.now();
     LocalTime myTime = LocalTime.now();
+    Map<String, String> messageBasedOnItem = new HashMap<String, String>() {{
+        put("chip", "Crunch Crunch, Yum!");
+        put("candy", "Munch Munch, Yum!");
+        put("drink", "Glug Glug, Yum!");
+        put("gum", "Chew Chew, Yum!");
+    }};
 
     public Transaction(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
     }
 
-    public void dispenseProduct(String slotID) {
-        if (!vendingMachine.getQuantityRemainingIfValidID(slotID).equals("Not Found") && !vendingMachine.getQuantityRemainingIfValidID(slotID).equals("0")) {
-            //TODO
-            //If a customer selects a valid product, it's dispensed to the customer.
-            //        - Dispensing an item prints the item name, cost, and the money
-            //        remaining. Dispensing also returns a message:
-            //          - All chip items print "Crunch Crunch, Yum!"
-            //          - All candy items print "Munch Munch, Yum!"
-            //          - All drink items print "Glug Glug, Yum!"
-            //          - All gum items print "Chew Chew, Yum!"
-            //        - After the machine dispenses the product, the machine must update its balance
-            //        accordingly and return the customer to the Purchase menu.
-            System.out.println(slotID + " You need to dispense an item");
-        } else if (vendingMachine.getQuantityRemainingIfValidID(slotID).equals("0"))
-            System.out.println("Sold out, please choose another item");
-        else
-            System.out.println("Slot ID does not exist");
+    public String dispenseProduct(String slotID) {
+        String key = "";
+        if (!vendingMachine.getItems().containsKey(slotID))
+            return "Slot ID does not exist";
+        else if (vendingMachine.getItems().get(slotID).getQuantity() < 1)
+            return "Sold out, please choose another item";
+        else if (getCurrentDollarAmount() - vendingMachine.getItems().get(slotID).getPrice() > 0) {
+            //Subtract price from balance
+            setCurrentDollarAmount(getCurrentDollarAmount() - vendingMachine.getItems().get(slotID).getPrice());
+            //Dispense Output
+            System.out.println("\nItem: " + vendingMachine.getItems().get(slotID).getDescription() + "\n" +
+                    "Cost: " + formatter.format(vendingMachine.getItems().get(slotID).getPrice()) + "\n" +
+                    "Money Remaining: " + formatter.format(getCurrentDollarAmount()));
+            //Decrement the quantity by 1
+            vendingMachine.getItems().get(slotID).setQuantity(vendingMachine.getItems().get(slotID).getQuantity() - 1);
+            //Message to be printed, key is assigned by getting the item's category and retrieving its value
+            key = vendingMachine.getItems().get(slotID).getCategory();
+            return messageBasedOnItem.get(key.toLowerCase());
+        }else
+            return "Not Enough Money. Please deposit " + formatter.format((vendingMachine.getItems().get(slotID).getPrice() - getCurrentDollarAmount()));
+
     }
 
-    public void depositDollarAmount(int addDollarAmount) {
+    public void depositDollarAmount(double addDollarAmount) {
         this.currentDollarAmount += addDollarAmount;
     }
 
-    public int getCurrentDollarAmount() {
+    public double getCurrentDollarAmount() {
         return currentDollarAmount;
     }
 
-    public void setCurrentDollarAmount(int setTo) {
-        this.currentDollarAmount = setTo;
+    public void setCurrentDollarAmount(double setTo) {
+        if(setTo >= 0)
+            this.currentDollarAmount = setTo;
     }
 
     //TODO
@@ -58,7 +72,7 @@ public class Transaction {
     //        01/01/2019 12:00:20 PM Crunchie B4 $1.75 $8.25
     //        01/01/2019 12:01:25 PM Cowtales B2 $1.50 $6.75
     //        01/01/2019 12:01:35 PM GIVE CHANGE: $6.75 $0.00
-    private void createLogFile(){
+    private void createLogFile() {
 
     }
 
