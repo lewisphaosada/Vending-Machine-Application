@@ -51,6 +51,20 @@ public class Transaction {
         this.currentDollarAmount += addDollarAmount;
     }
 
+    public void giveChange(){
+        int nickles= 0, dimes = 0, quarters = 0;
+        double change = getCurrentDollarAmount();
+        quarters = (int)(change / 0.25);
+        change = change % 0.25;
+        dimes = (int) (change/0.10);
+        change = change % 0.10;
+        nickles = (int) (change/0.05);
+        System.out.println("\nPlease take your change: " +
+                            "\nQuarters: " + quarters +
+                            "\nDimes: " + dimes +
+                            "\nNickels: " + nickles);
+    }
+
     public double getCurrentDollarAmount() {
         return currentDollarAmount;
     }
@@ -61,7 +75,7 @@ public class Transaction {
     }
 
     //TODO
-    //The vending machine logs all transactions to prevent theft from the vending machine.
+    // The vending machine logs all transactions to prevent theft from the vending machine.
     //   - Each purchase must generate a line in a file called `Log.txt`.
     //   - The lines must follow the format shown in the following example.
     //       - The first dollar amount is the amount deposited, spent, or given as change.
