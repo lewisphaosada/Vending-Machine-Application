@@ -34,35 +34,35 @@ public class Transaction {
             //Subtract price from balance
             setCurrentDollarAmount(getCurrentDollarAmount() - vendingMachine.getItems().get(slotID).getPrice());
             //Dispense Output
-            System.out.println("\nItem: " + vendingMachine.getItems().get(slotID).getDescription() + "\n" +
-                    "Cost: " + formatter.format(vendingMachine.getItems().get(slotID).getPrice()) + "\n" +
-                    "Money Remaining: " + formatter.format(getCurrentDollarAmount()));
+            System.out.println("\nItem: " + vendingMachine.getItems().get(slotID).getDescription() +
+                    "\nCost: " + formatter.format(vendingMachine.getItems().get(slotID).getPrice()) +
+                    "\nMoney Remaining: " + formatter.format(getCurrentDollarAmount()));
             //Decrement the quantity by 1
             vendingMachine.getItems().get(slotID).setQuantity(vendingMachine.getItems().get(slotID).getQuantity() - 1);
             //Message to be printed, key is assigned by getting the item's category and retrieving its value
             key = vendingMachine.getItems().get(slotID).getCategory();
             return messageBasedOnItem.get(key.toLowerCase());
-        }else
-            return "Not Enough Money. Please deposit " + formatter.format((vendingMachine.getItems().get(slotID).getPrice() - getCurrentDollarAmount()));
-
+        } else
+            return "Not Enough Money. Please deposit " +
+                    formatter.format((vendingMachine.getItems().get(slotID).getPrice() - getCurrentDollarAmount()));
     }
 
     public void depositDollarAmount(double addDollarAmount) {
         this.currentDollarAmount += addDollarAmount;
     }
 
-    public void giveChange(){
-        int nickles= 0, dimes = 0, quarters = 0;
+    public void giveChange() {
+        int nickles = 0, dimes = 0, quarters = 0;
         double change = getCurrentDollarAmount();
-        quarters = (int)(change / 0.25);
+        quarters = (int) (change / 0.25);
         change = change % 0.25;
-        dimes = (int) (change/0.10);
+        dimes = (int) (change / 0.10);
         change = change % 0.10;
-        nickles = (int) (change/0.05);
+        nickles = (int) (change / 0.05);
         System.out.println("\nPlease take your change: " +
-                            "\nQuarters: " + quarters +
-                            "\nDimes: " + dimes +
-                            "\nNickels: " + nickles);
+                "\nQuarters: " + quarters +
+                "\nDimes: " + dimes +
+                "\nNickels: " + nickles);
     }
 
     public double getCurrentDollarAmount() {
@@ -70,7 +70,7 @@ public class Transaction {
     }
 
     public void setCurrentDollarAmount(double setTo) {
-        if(setTo >= 0)
+        if (setTo >= 0)
             this.currentDollarAmount = setTo;
     }
 

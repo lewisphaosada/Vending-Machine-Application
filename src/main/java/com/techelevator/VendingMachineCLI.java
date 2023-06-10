@@ -60,7 +60,8 @@ public class VendingMachineCLI {
                                 System.out.println(message);
                                 break;
                             case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
-                                transaction.giveChange();
+                                if(transaction.getCurrentDollarAmount() > 0)
+                                    transaction.giveChange();
                                 transaction.setCurrentDollarAmount(0);
                                 stayInPurchaseMenu = false;
                                 break;
