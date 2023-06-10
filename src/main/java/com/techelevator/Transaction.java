@@ -1,18 +1,21 @@
 package com.techelevator;
 
+import ch.qos.logback.classic.Logger;
+import java.io.IOException;
 import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 public class Transaction {
     private VendingMachine vendingMachine;
     private double currentDollarAmount = 0;
     NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
-    LocalDate myDate = LocalDate.now();
-    LocalTime myTime = LocalTime.now();
+    //Built in logging framework
     Map<String, String> messageBasedOnItem = new HashMap<String, String>() {{
         put("chip", "Crunch Crunch, Yum!");
         put("candy", "Munch Munch, Yum!");
@@ -39,6 +42,10 @@ public class Transaction {
                     "\nMoney Remaining: " + formatter.format(getCurrentDollarAmount()));
             //Decrement the quantity by 1
             vendingMachine.getItems().get(slotID).setQuantity(vendingMachine.getItems().get(slotID).getQuantity() - 1);
+            //Writing to log file.
+            log.info(vendingMachine.getItems().get(slotID).getDescription() + ": " +
+                    formatter.format(vendingMachine.getItems().get(slotID).getPrice()) + " " +
+                    formatter.format(getCurrentDollarAmount()));
             //Message to be printed, key is assigned by getting the item's category and retrieving its value
             key = vendingMachine.getItems().get(slotID).getCategory();
             return messageBasedOnItem.get(key.toLowerCase());
@@ -49,11 +56,13 @@ public class Transaction {
 
     public void depositDollarAmount(double addDollarAmount) {
         this.currentDollarAmount += addDollarAmount;
+        log.info("FEED MONEY: " + formatter.format(addDollarAmount) + " " + formatter.format(currentDollarAmount));
     }
 
     public void giveChange() {
         int nickles = 0, dimes = 0, quarters = 0;
         double change = getCurrentDollarAmount();
+        log.info("GIVE CHANGE: " + formatter.format(change) + " " + formatter.format(0));
         quarters = (int) (change / 0.25);
         change = change % 0.25;
         dimes = (int) (change / 0.10);
@@ -73,21 +82,4 @@ public class Transaction {
         if (setTo >= 0)
             this.currentDollarAmount = setTo;
     }
-
-    //TODO
-    // The vending machine logs all transactions to prevent theft from the vending machine.
-    //   - Each purchase must generate a line in a file called `Log.txt`.
-    //   - The lines must follow the format shown in the following example.
-    //       - The first dollar amount is the amount deposited, spent, or given as change.
-    //       - The second dollar amount is the new balance.
-    //        ```
-    //        01/01/2019 12:00:00 PM FEED MONEY: $5.00 $5.00
-    //        01/01/2019 12:00:15 PM FEED MONEY: $5.00 $10.00
-    //        01/01/2019 12:00:20 PM Crunchie B4 $1.75 $8.25
-    //        01/01/2019 12:01:25 PM Cowtales B2 $1.50 $6.75
-    //        01/01/2019 12:01:35 PM GIVE CHANGE: $6.75 $0.00
-    private void createLogFile() {
-
-    }
-
 }
