@@ -24,7 +24,7 @@ public class VendingMachine {
     }
 
     private void loadFromFile() {
-        File newFile = new File("vendingmachine.csv");
+        File newFile = new File("./data/vendingmachine.csv");
         try (Scanner sc = new Scanner(newFile)) {
             while (sc.hasNextLine()) {
                 String inLine = sc.nextLine();

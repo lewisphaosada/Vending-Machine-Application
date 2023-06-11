@@ -71,6 +71,11 @@ public class VendingMachineCLI {
                         System.out.println("\nCurrent Money Deposited: " + formatter.format(transaction.getCurrentDollarAmount()));
                     }
                     break;
+                case MAIN_MENU_SECRET_OPTION:
+                    transaction.dataBase.generateSalesReport();
+                    System.out.println("\n *** Total Sales to date: " +
+                            formatter.format(transaction.dataBase.calculateTotalDollarAmount()) + " ***");
+                    break;
                 case MAIN_MENU_OPTION_EXIT:
                     System.out.println("Thank you, come again!");
                     System.exit(0);

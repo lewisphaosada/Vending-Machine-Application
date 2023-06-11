@@ -1,6 +1,6 @@
 <configuration>
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>log.txt</file>
+        <file>./data/log.txt</file>
         <encoder>
             <pattern>%d{MM/dd/yyyy HH:mm:ss a} - %msg%n</pattern>
         </encoder>

@@ -1,9 +1,6 @@
 package com.techelevator;
 
-import ch.qos.logback.classic.Logger;
-import java.io.IOException;
 import java.text.NumberFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -12,10 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Transaction {
+    h2Server dataBase = new h2Server();
     private VendingMachine vendingMachine;
     private double currentDollarAmount = 0;
     NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
-    //Built in logging framework
+
     Map<String, String> messageBasedOnItem = new HashMap<String, String>() {{
         put("chip", "Crunch Crunch, Yum!");
         put("candy", "Munch Munch, Yum!");
@@ -25,6 +23,8 @@ public class Transaction {
 
     public Transaction(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
+        //Used for initial creation of database
+        //dataBase.createAndInitializeDatabase();
     }
 
     public String dispenseProduct(String slotID) {
@@ -42,6 +42,10 @@ public class Transaction {
                     "\nMoney Remaining: " + formatter.format(getCurrentDollarAmount()));
             //Decrement the quantity by 1
             vendingMachine.getItems().get(slotID).setQuantity(vendingMachine.getItems().get(slotID).getQuantity() - 1);
+            //*****BONUS**** Add sale to sale table ****
+            dataBase.insertSale(vendingMachine.getItems().get(slotID));
+            //*****BONUS**** Increment the total amount sold ****
+            dataBase.incrementTotalSold(slotID, 1);
             //Writing to log file.
             log.info(vendingMachine.getItems().get(slotID).getDescription() + ": " +
                     formatter.format(vendingMachine.getItems().get(slotID).getPrice()) + " " +
