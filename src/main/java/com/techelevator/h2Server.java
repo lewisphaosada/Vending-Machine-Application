@@ -16,7 +16,7 @@ public class h2Server {
     public void createAndInitializeDatabase() {
         try {
                 Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                if (tableExists(connection, "ALL_ITEMS")) return;
+                if (tableExists(connection, "ALL_ITEMS")){ connection.close(); return;}
                 String firstSql = "CREATE TABLE IF NOT EXISTS all_items (slot CHAR(2) PRIMARY KEY, name VARCHAR(55), price double, category VARCHAR(55), total_sold INT)";
                 PreparedStatement statement = connection.prepareStatement(firstSql);
                 statement.executeUpdate();
