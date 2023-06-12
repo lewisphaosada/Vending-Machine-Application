@@ -24,7 +24,7 @@ public class Transaction {
     public Transaction(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
         //Used for initial creation of database
-        //dataBase.createAndInitializeDatabase();
+        dataBase.createAndInitializeDatabase();
     }
 
     public String dispenseProduct(String slotID) {

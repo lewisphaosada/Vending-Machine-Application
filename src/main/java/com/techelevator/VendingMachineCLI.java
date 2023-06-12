@@ -91,7 +91,6 @@ public class VendingMachineCLI {
         VendingMachine vendingMachine = new VendingMachine();
         Transaction transaction = new Transaction(vendingMachine);
         VendingMachineCLI cli = new VendingMachineCLI(menu, vendingMachine, transaction);
-
         cli.run();
     }
 

@@ -1,6 +1,7 @@
 package com.techelevator;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,7 @@ public class h2Server {
     public void createAndInitializeDatabase() {
         try {
                 Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                if (tableExists(connection, "ALL_ITEMS")) return;
                 String firstSql = "CREATE TABLE IF NOT EXISTS all_items (slot CHAR(2) PRIMARY KEY, name VARCHAR(55), price double, category VARCHAR(55), total_sold INT)";
                 PreparedStatement statement = connection.prepareStatement(firstSql);
                 statement.executeUpdate();
@@ -110,10 +112,15 @@ public class h2Server {
         }
     }
 
+    private boolean tableExists(Connection connection, String tableName) throws SQLException {
+        DatabaseMetaData meta = connection.getMetaData();
+        ResultSet resultSet = meta.getTables(null, null, tableName, new String[] {"TABLE"});
+        return resultSet.next();
+    }
+
     // TODO
     //Figure out how to format the output
     //Find out why we have to comment out database initialization
-    //Test change method and all methods
 
 
 //    // Formatting for columns
