@@ -117,22 +117,5 @@ public class h2Server {
         ResultSet resultSet = meta.getTables(null, null, tableName, new String[] {"TABLE"});
         return resultSet.next();
     }
-
-    // TODO
-    //Figure out how to format the output
-    //Find out why we have to comment out database initialization
-
-
-//    // Formatting for columns
-//    private String formatColumns(String column) {
-//        // Apply desired formatting
-//        return column;
-//    }
-//
-//    // Formatting for rows
-//    private String formatRows(String row) {
-//        // Apply desired formatting
-//        return row;
-//    }
 }
 
