@@ -27,7 +27,7 @@ public class h2Server {
                 statement = connection.prepareStatement(firstValue);
                 statement.executeUpdate();
 
-                String secondSql = "CREATE TABLE IF NOT EXISTS sales_table (transaction_num INT NOT NULL AUTO_INCREMENT PRIMARY KEY, slot CHAR(2), name VARCHAR(55), price double, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+                String secondSql = "CREATE TABLE IF NOT EXISTS sales_table (transaction_num INT NOT NULL AUTO_INCREMENT PRIMARY KEY, slot CHAR(2), name VARCHAR(55), price double, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (slot) REFERENCES all_items(slot))";
                 statement = connection.prepareStatement(secondSql);
                 statement.executeUpdate();
 
